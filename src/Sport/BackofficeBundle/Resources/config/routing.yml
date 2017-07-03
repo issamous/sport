@@ -1,0 +1,11 @@
+sport_backoffice_home:
+    path:     /
+    defaults: { _controller: SportBackofficeBundle:Default:index }
+
+backoffic_categorie_ajoutpage:
+    path:     /Categories/Ajout
+    defaults: { _controller: SportBackofficeBundle:Categories:ajout }
+
+backoffic_categorie_liste_page:
+    path:     /Categories
+    defaults: { _controller: SportBackofficeBundle:Categories:liste }

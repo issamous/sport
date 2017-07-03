@@ -1,3 +1,8 @@
+sport_backoffice:
+    resource: "@SportBackofficeBundle/Resources/config/routing.yml"
+    prefix:   /backoffice
+
+
 app:
     resource: '@AppBundle/Controller/'
     type: annotation
