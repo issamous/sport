@@ -1,0 +1,165 @@
+{% extends "layout/layout.Backofice.html.twig"%}
+
+{% block css %}
+    <link href="{{ asset('css/plugins/datapicker/datepicker3.css')}}" rel="stylesheet">
+
+    <link href="{{ asset('css/plugins/summernote/summernote.css')}}" rel="stylesheet">
+    <link href="{{ asset('css/plugins/summernote/summernote-bs3.css')}}" rel="stylesheet">
+{% endblock %}
+
+{% block topcontent %}
+    <div class="row wrapper border-bottom white-bg page-heading">
+        <div class="col-lg-8">
+            <h2>Ajout Actualités</h2>
+            <ol class="breadcrumb">
+                <li>
+                    <a href="{{ path('sport_backoffice_home') }}">Dashboard</a>
+                </li>
+
+                <li>
+                    <a href="{{ path('backoffic_news_liste_page') }}">liste Actualités</a>
+                </li>
+
+                <li class="active">
+                    <strong>Ajout Actualités </strong>
+                </li>
+            </ol>
+        </div>
+        <div class="col-lg-4">
+            <div class="title-action">
+                <a href="" target="_blank" class="btn btn-primary"><i class="fa fa-check"></i> Enregistrer </a>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+
+{% block content %}
+
+    <div class="wrapper wrapper-content">
+        <div class="text-center animated fadeInRightBig">
+
+            <div class="row" ng-controller="addController" >
+
+                <div class="col-lg-12">
+                    <div class="ibox float-e-margins">
+
+                        <div class="ibox-content">
+
+                            <div ng-show="chargementAjout"  class="form-horizontal" style="margin: 15% 0;">
+
+                                <div class="sk-spinner sk-spinner-chasing-dots">
+                                    <div class="sk-dot1"></div>
+                                    <div class="sk-dot2"></div>
+                                </div>
+
+                            </div>
+
+
+                            <form method="post" name="formAddNews" class="form-horizontal" ng-hide="chargementAjout">
+                                <div class="form-group"><label class="col-sm-2 control-label">Titre </label>
+
+                                    <div class="col-sm-10"><input ng-model="nom" required  type="text" class="form-control"></div>
+                                </div>
+
+                                <div class="hr-line-dashed"></div>
+                                <div class="form-group"><label   class="col-sm-2 control-label">Catégorie</label>
+                                    <div class="col-sm-10">
+                                        <select class="form-control m-b" ng-model="Categories">
+                                            <option  value="">select Categorie</option>
+
+                                        </select>
+
+                                     </div>
+                                </div>
+
+                                <div class="hr-line-dashed"></div>
+                                <div class="form-group"><label   class="col-sm-2 control-label">Article</label>
+                                    <div class="col-sm-10"><textarea class="summernote" ng-model="article" required pattern="[a-zA-Z0-9]*" type="text" class="form-control"> </textarea>
+                                    </div>
+                                </div>
+
+
+                                <div class="hr-line-dashed"></div>
+                                <div class="form-group"><label class="col-sm-2 control-label">Image</label>
+                                    <div class="col-sm-10"><input file-model="photo"  type="file" class="form-control">
+                                    </div>
+                                </div>
+
+                                <div class="hr-line-dashed"></div>
+                                <div class="form-group" id="data_1" >
+                                    <label   class="col-sm-2 control-label">Date</label>
+                                    <div class="input-group date">
+                                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input ng-model="date" required pattern="[a-zA-Z0-9]*"  type="text" class="form-control" value="03/04/2014">
+                                    </div>
+
+                                </div>
+
+                                <div class="hr-line-dashed"></div>
+                                <div class="form-group"><label   class="col-sm-2 control-label">A la Une</label>
+                                    <div class="col-sm-10">
+                                        <select class="form-control m-b" ng-model="laune">
+                                            <option value="0" selected="">Non</option>
+                                            <option value="1">Oui</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="hr-line-dashed"></div>
+                                <div class="form-group"><label   class="col-sm-2 control-label">Publié</label>
+                                    <div class="col-sm-10">
+                                        <select class="form-control m-b" ng-model="public">
+                                            <option value="0" selected="">Non</option>
+                                            <option value="1">Oui</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="hr-line-dashed"></div>
+
+                                <div class="form-group">
+                                    <div class="col-sm-4 col-sm-offset-2">
+                                        <a href="{{ path('backoffic_categorie_liste_page') }}" class="btn btn-white" type="submit">Cancel</a>
+                                        <button class="btn btn-primary" ng-click="Addcategorie(formAddCategorie,photo)" >Enregistrer</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascript %}
+    <!-- Data picker -->
+    <script src="{{ asset('js/plugins/datapicker/bootstrap-datepicker.js')}}"></script>
+    <!-- SUMMERNOTE -->
+    <script src="{{ asset('js/plugins/summernote/summernote.min.js')}}"></script>
+
+    <script>
+    $('#data_1 .input-group.date').datepicker({
+    todayBtn: "linked",
+    keyboardNavigation: false,
+    forceParse: false,
+    calendarWeeks: true,
+    autoclose: true
+    });
+
+    $('.summernote').summernote();
+</script>
+{% endblock %}
+{% block angularjs %}
+<script>
+
+    app.controller("addController",function($scope,$http) {
+
+
+
+        $scope.initForm = function () {
+
+
+        }
+    });
+{% endblock %}

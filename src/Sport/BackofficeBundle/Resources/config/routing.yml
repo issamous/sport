@@ -9,3 +9,29 @@ backoffic_categorie_ajoutpage:
 backoffic_categorie_liste_page:
     path:     /Categories
     defaults: { _controller: SportBackofficeBundle:Categories:liste }
+
+backoffic_categorie_Add_webservice:
+    path:     /Categories/AjoutCategorisWeb
+    defaults: { _controller: SportBackofficeBundle:Categories:AddCategoris }
+
+backoffic_categorie_listing_webservice:
+       path:     /Categories/ListCategorisWeb
+       defaults: { _controller: SportBackofficeBundle:Categories:getCategoriesList }
+
+backoffic_categorie_Modifer_webservice:
+       path:     /Categories/ModiferCategorisWeb
+       defaults: { _controller: SportBackofficeBundle:Categories:UpdateCategories }
+
+backoffic_categorie_supprime_webservice:
+       path:     /Categories/suppimerCategorieweb/{id}
+       defaults: { _controller: SportBackofficeBundle:Categories:suppimerCategories }
+
+
+
+backoffic_news_ajout_page:
+    path:     /News/Ajout
+    defaults: { _controller: SportBackofficeBundle:News:ajout }
+
+backoffic_news_liste_page:
+    path:     /News
+    defaults: { _controller: SportBackofficeBundle:News:liste }

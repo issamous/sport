@@ -1,0 +1,145 @@
+{% extends "layout/layout.Backofice.html.twig" %}
+
+{% block topcontent %}
+
+    <div class="row wrapper border-bottom white-bg page-heading">
+        <div class="col-lg-8">
+            <h2>Ajout Categorie</h2>
+            <ol class="breadcrumb">
+                <li>
+                    <a href="{{ path('sport_backoffice_home') }}">Dashboard</a>
+                </li>
+
+                <li>
+                    <a href="{{ path('backoffic_categorie_liste_page') }}">liste Categorie</a>
+                </li>
+
+                <li class="active">
+                    <strong>Ajout Categorie </strong>
+                </li>
+            </ol>
+        </div>
+        <div class="col-lg-4">
+            <div class="title-action">
+               <a href="" target="_blank" class="btn btn-primary"><i class="fa fa-check"></i> Enregistrer </a>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+
+<div class="wrapper wrapper-content">
+     <div class="text-center animated fadeInRightBig">
+
+    <div class="row" ng-controller="addController" >
+
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+
+                <div class="ibox-content">
+
+                    <div ng-show="chargementAjout"  class="form-horizontal" style="margin: 15% 0;">
+
+                        <div class="sk-spinner sk-spinner-chasing-dots">
+                            <div class="sk-dot1"></div>
+                            <div class="sk-dot2"></div>
+                        </div>
+
+                    </div>
+
+
+                    <form method="post" name="formAddCategorie" class="form-horizontal" ng-hide="chargementAjout">
+                        <div class="form-group"><label class="col-sm-2 control-label">Nom </label>
+
+                            <div class="col-sm-10"><input ng-model="nom" required  type="text" class="form-control"></div>
+                        </div>
+                        <div class="hr-line-dashed"></div>
+                        <div class="form-group"><label   class="col-sm-2 control-label">Description</label>
+                            <div class="col-sm-10"><textarea ng-model="description" required pattern="[a-zA-Z0-9]*" type="text" class="form-control"> </textarea>
+                            </div>
+                        </div>
+                        <div class="hr-line-dashed"></div>
+
+                        <div class="form-group"><label class="col-sm-2 control-label">Image</label>
+                            <div class="col-sm-10"><input file-model="photo"  type="file" class="form-control">
+                            </div>
+                        </div>
+                        <div class="hr-line-dashed"></div>
+
+                        <div class="form-group">
+                            <div class="col-sm-4 col-sm-offset-2">
+                                <a href="{{ path('backoffic_categorie_liste_page') }}" class="btn btn-white" type="submit">Cancel</a>
+                                <button class="btn btn-primary" ng-click="Addcategorie(formAddCategorie,photo)" >Enregistrer</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+ </div>
+</div>
+{% endblock %}
+
+
+
+{% block angularjs %}
+    <script>
+
+        app.controller("addController",function($scope,$http)  {
+
+            $scope.chargementAjout = false;
+
+            $scope.initForm =function () {
+                $scope.nom = "";
+                $scope.description = "";
+
+               // console.log($scope.photo.src);
+               // $scope.photo.src = "";
+            }
+
+
+            $scope.Addcategorie = function(form,photo){
+
+                console.log(form);
+                console.log(photo);
+
+                if (form.$valid){
+
+                    $scope.ObjectToSend = {nom: $scope.nom , description : $scope.description } ;
+
+                 var formAddCat = new FormData();
+
+                    formAddCat.append("data" ,JSON.stringify( $scope.ObjectToSend));
+                    formAddCat.append("photo",photo) ;
+
+                    $scope.UrltoSend = "http://localhost/tunisiasport/web/app_dev.php/backoffice/Categories/AjoutCategorisWeb";
+
+                    $scope.chargementAjout = true;
+
+                    $http.post($scope.UrltoSend,formAddCat,{
+                        transformRequest: angular.identity,
+                        headers: {'Content-Type': undefined}
+                    }).then(function (reponse) {
+
+                        if(reponse.data.success){
+                            toastr.success(reponse.data.message,"Ajout Catégorie");
+                            $scope.initForm();
+                        }else{
+                            toastr.warning(reponse.data.message,"Ajout Catégorie");
+
+                        }
+
+                        $scope.chargementAjout = false;
+
+                      })
+
+                }
+
+            }
+
+        })
+    </script>
+
+{% endblock %}

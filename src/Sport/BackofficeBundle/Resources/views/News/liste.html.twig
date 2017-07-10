@@ -1,0 +1,26 @@
+{% extends '::layout/layout.Backofice.html.twig' %}
+
+{% block css %}
+    <!-- FooTable -->
+    <link href="{{ asset('css/plugins/footable/footable.core.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block topcontent %}
+    <div class="row wrapper border-bottom white-bg page-heading">
+        <div class="col-lg-8">
+            <h2>Liste Categories</h2>
+            <ol class="breadcrumb">
+                <li>
+                    <a href="{{ path('sport_backoffice_home') }}">Dashboard</a>
+                </li>
+
+                <li class="active">
+                    <strong>Liste Actualités </strong>
+                </li>
+            </ol>
+        </div>
+        <div class="col-lg-4">
+
+        </div>
+    </div>
+{% endblock  %}

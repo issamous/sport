@@ -11,18 +11,19 @@
     <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ asset('font-awesome/css/font-awesome.css') }}" rel="stylesheet">
 
-    <!-- FooTable -->
-    <link href="{{ asset('css/plugins/footable/footable.core.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/plugins/toastr/toastr.min.css') }}" rel="stylesheet">
 
     <link href="{{ asset('css/animate.css') }}" rel="stylesheet">
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
 
+{% block css %}
+{% endblock %}
 
-
+    <script src="{{ asset('angularjs/angular.min.js') }}" ></script>
 
 </head>
 
-<body class="">
+<body ng-app="appBackoffice">
 
 <div id="wrapper">
 
@@ -65,8 +66,8 @@
                 <li>
                     <a href="#"><i class="fa fa-table"></i> <span class="nav-label">Actualités</span><span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse">
-                        <li><a href="table_basic.html">Gestion Actualités</a></li>
-                        <li><a href="table_data_tables.html">Ajout Actualités</a></li>
+                        <li><a href="{{ path('backoffic_news_liste_page') }}">Gestion Actualités</a></li>
+                        <li><a href="{{ path('backoffic_news_ajout_page') }}">Ajout Actualités</a></li>
 
                     </ul>
                 </li>
@@ -192,18 +193,40 @@
 <script src="{{ asset('js/inspinia.js') }}"></script>
 <script src="{{ asset('js/plugins/pace/pace.min.js') }}"></script>
 
-<!-- FooTable -->
-<script src="{{ asset('js/plugins/footable/footable.all.min.js')}}"></script>
+<script src="{{ asset('js/plugins/toastr/toastr.min.js') }}"></script>
 
-<!-- Page-Level Scripts -->
+{% block javascript %}
+{% endblock %}
+
 <script>
-    $(document).ready(function() {
+    var app = angular.module("appBackoffice",[]);
 
-        $('.footable').footable();
+       app.config(function ($interpolateProvider) {
+           $interpolateProvider.startSymbol('%%');
+           $interpolateProvider.endSymbol('%%');
+       });
 
-    });
+    app.directive('fileModel', ['$parse', function ($parse) {
+        return {
+            restrict: 'A',
+            link: function(scope, element, attrs) {
+                var model = $parse(attrs.fileModel);
+                var modelSetter = model.assign;
 
+                element.bind('change', function(){
+                    scope.$apply(function(){
+                        modelSetter(scope, element[0].files[0]);
+                    });
+                });
+            }
+        };
+    }]);
 </script>
+
+{% block angularjs %}
+{% endblock %}
+
+
 </body>
 
 </html>
